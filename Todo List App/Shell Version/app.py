@@ -4,8 +4,7 @@ records = []
 done_list = []
 def display():
     print("Welcome to Todo List App")
-    print("To add something to your list type 'add'")
-    print("To show your list type 'Show'")
+    print("funtions: 'add','show','edit','delete','check'")
     print("To exit type 'exit'")
     return True
 
@@ -49,6 +48,30 @@ def done(records,done_list):
     except:
         print("Invalid Id\nTry Again")
     return True
+
+def edit(records,done_list):
+    flag = show(records,done_list)
+    if not flag:
+        return "empty"
+    id = input("record id: ")
+    if id.lower()=="exit":
+        return False
+    try:
+        id = int(id)
+        records[id-1] = input(f"{records[id-1]}:")
+        choice = input("edit checking?(Y/N): ")
+        if choice.lower() == "y"|"yes":
+            choice2 = input("'check' or 'uncheck': ")
+            if choice2.lower() == "check":
+                done_list[id-1] = "done"
+            elif choice2.lower() == "uncheck":
+                done_list[id-1] = ""
+        else:
+            pass
+    except:
+        print("Invalid Id\nTry Again")
+    return True
+
 
 
 def remove(records,done_list):
@@ -106,5 +129,13 @@ while True:
             if flag == "empty":
                 print("Unable to check records!")
                 print("")
+        case "edit":
+            clear()
+            flag = edit(records,done_list)
+            show(records,done_list)
+            if flag == "empty":
+                print("Unable to edit records!")
+                print("")
+
         case others:
             print(f"No keyword like {others}")
